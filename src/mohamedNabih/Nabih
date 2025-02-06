@@ -1,0 +1,6 @@
+var CryptoJS = require('crypto-js')
+
+var ciphertext =CryptoJS.AES.encrypt('my message' ,'1').toString();
+
+var bytes =CryptoJS.AES.decrypt('ciphertext')
+console.log(ciphertexts);
