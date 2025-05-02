@@ -10,118 +10,116 @@ import { FaCartPlus, FaRegUser } from "react-icons/fa";
 import Login from "./Components/UserLogIn/Login";
 import Cart from "./Components/ShoppingCart/Cart";
 
+type Page = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+
 function App() {
-  const IconStyle = {
+  const [currentPage, setCurrentPage] = useState<Page>(1);
+  const [activeColor, setActiveColor] = useState("red");
+
+  const iconStyle = {
     cursor: "pointer",
     _hover: { color: "red" },
     boxSize: "20px",
   };
-  const [count, setcount] = useState(1);
-  const [Color, setColor] = useState("red");
-  // const [ShowNavBar, setShowNavBar] = useState(1);
+
+  const handlePageChange = (page: Page) => {
+    setCurrentPage(page);
+    setActiveColor("red");
+  };
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 1:
+        return <Home />;
+      case 2:
+        return <Story />;
+      case 3:
+        return <Products />;
+      case 4:
+        return <Faqs />;
+      case 5:
+        return <Contact />;
+      case 6:
+        return <Login />;
+      case 7:
+        return <Cart />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
       <Box
         p={5}
-        bg={count == 6 ? "gray.700" : "white"}
-        color={count == 6 ? "white" : "black"}
-        w={"100%"}
+        bg={currentPage === 6 ? "gray.700" : "white"}
+        color={currentPage === 6 ? "white" : "black"}
+        w="100%"
       >
-        <HStack justifyContent={"space-between"}>
+        <HStack justifyContent="space-between">
           <Text
-            fontSize={"x-large"}
+            fontSize="x-large"
             _hover={{ color: "red" }}
-            cursor={"pointer"}
-            ml={"40px"}
-            onClick={() => setcount(1)}
+            cursor="pointer"
+            ml="40px"
+            onClick={() => handlePageChange(1)}
           >
             <span style={{ color: "red", marginRight: "5px" }}>Little</span>
             Fashion
           </Text>
           <HStack spacing={8}>
             <Link
-              _hover={{ color: Color }}
-              color={count === 1 ? "red" : ""}
-              onClick={() => {
-                setcount(1), setColor("red");
-              }}
+              _hover={{ color: activeColor }}
+              color={currentPage === 1 ? "red" : ""}
+              onClick={() => handlePageChange(1)}
             >
               Home
             </Link>
             <Link
-              _hover={{ color: Color }}
-              color={count === 2 ? Color : ""}
-              onClick={() => {
-                setcount(2), setColor("red");
-              }}
+              _hover={{ color: activeColor }}
+              color={currentPage === 2 ? activeColor : ""}
+              onClick={() => handlePageChange(2)}
             >
               Story
             </Link>
             <Link
-              _hover={{ color: Color }}
-              color={count === 3 ? Color : ""}
-              onClick={() => {
-                setcount(3), setColor("red");
-              }}
+              _hover={{ color: activeColor }}
+              color={currentPage === 3 ? activeColor : ""}
+              onClick={() => handlePageChange(3)}
             >
               Products
             </Link>
             <Link
-              _hover={{ color: Color }}
-              color={count === 4 ? Color : ""}
-              onClick={() => {
-                setcount(4), setColor("red");
-              }}
+              _hover={{ color: activeColor }}
+              color={currentPage === 4 ? activeColor : ""}
+              onClick={() => handlePageChange(4)}
             >
               FAQS
             </Link>
             <Link
-              _hover={{ color: Color }}
-              color={count === 5 ? Color : ""}
-              onClick={() => {
-                setcount(5), setColor("red");
-              }}
+              _hover={{ color: activeColor }}
+              color={currentPage === 5 ? activeColor : ""}
+              onClick={() => handlePageChange(5)}
             >
               Contact
             </Link>
           </HStack>
-          <HStack spacing={6} mr={"40px"}>
+          <HStack spacing={6} mr="40px">
             <Icon
-              {...IconStyle}
+              {...iconStyle}
               as={FaRegUser}
-              onClick={() => {
-                setcount(6), setColor("red");
-              }}
+              onClick={() => handlePageChange(6)}
             />
             <Icon
-              {...IconStyle}
+              {...iconStyle}
               as={FaCartPlus}
-              onClick={() => {
-                setcount(7), setColor("red");
-              }}
+              onClick={() => handlePageChange(7)}
             />
           </HStack>
         </HStack>
       </Box>
 
-      {count === 1 ? (
-        <Home />
-      ) : count === 2 ? (
-        <Story />
-      ) : count === 3 ? (
-        <Products />
-      ) : count === 4 ? (
-        <Faqs />
-      ) : count === 5 ? (
-        <Contact />
-      ) : count === 6 ? (
-        <Login />
-      ) : count === 7 ? (
-        <Cart />
-      ) : (
-        ""
-      )}
+      {renderPage()}
       <Footer />
     </>
   );
